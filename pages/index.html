@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Record System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold">Health Record System</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="register.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Register</a>
+                    <a href="login.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-white">
+        <div class="container mx-auto py-16 px-4 text-center">
+            <!-- Image before welcome text -->
+            <div class="mb-8">
+                <img src="images/Home Page.svg" alt="Home Page" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Welcome Text -->
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Welcome to the Health Record System</h1>
+            <p class="text-lg text-gray-600 mb-8">A platform designed for secure and easy access to health records, empowering doctors and patients to connect seamlessly.</p>
+            <div class="flex justify-center space-x-4 mb-8">
+                <a href="register.html" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition duration-300">Register</a>
+                <a href="login.html" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-gray-300 transition duration-300">Login</a>
+            </div>
+
+            <!-- Results Container -->
+            <div id="results" class="mt-8 max-w-3xl mx-auto"></div>
+        </div>
+    </section>
+
+
+
+    <!-- Features Section -->
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900">Why Choose Our Platform</h2>
+            <p class="text-lg text-gray-600 mt-4">Empowering your healthcare journey with cutting-edge technology</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Secure Data Storage</h3>
+                <p class="text-gray-600">Military-grade encryption protecting your most sensitive health information</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Easy Access</h3>
+                <p class="text-gray-600">Seamless access to your health records from any device, anywhere</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Doctor-Patient Connect</h3>
+                <p class="text-gray-600">Collaborative healthcare with secure, instant provider communication</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Integrated Health Ecosystem Section -->
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900">Your Complete Health Ecosystem</h2>
+            <p class="text-lg text-gray-600 mt-4">Seamlessly connect your medical journey across providers, specialties, and health platforms</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-blue-50 p-6 rounded-lg text-center">
+                <svg class="w-16 h-16 mx-auto text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 4v-4m0 0H9m0 0h2m2 4v-4m0 0h2m-2 0h2"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Multi-Provider Integration</h3>
+                <p class="text-gray-600">Connect records from hospitals, clinics, and private practitioners</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg text-center">
+                <svg class="w-16 h-16 mx-auto text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Comprehensive Record Management</h3>
+                <p class="text-gray-600">Store and track all medical information in one unified platform</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg text-center">
+                <svg class="w-16 h-16 mx-auto text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Real-Time Updates</h3>
+                <p class="text-gray-600">Instant synchronization across your healthcare network</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Comprehensive Health Insights Section -->
+<section class="bg-white py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-gray-900">Intelligent Health Insights</h2>
+            <p class="text-lg text-gray-600 mt-4">Transform your health data into actionable intelligence</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Predictive Analytics</h3>
+                <p class="text-gray-600">Advanced risk assessment and early health trend detection</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Personalized Health Timeline</h3>
+                <p class="text-gray-600">Comprehensive visualization of your medical history</p>
+            </div>
+            <div class="bg-blue-50 p-6 rounded-lg">
+                <svg class="w-12 h-12 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Smart Recommendations</h3>
+                <p class="text-gray-600">AI-powered health guidance and lifestyle suggestions</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Data Accessibility and Control Section -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="md:flex items-center">
+            <div class="md:w-1/2 mb-8 md:mr-12">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6">Total Data Control in Your Hands</h2>
+                <p class="text-lg text-gray-700 mb-6">Manage who sees your health information with granular, permission-based access controls.</p>
+                <ul class="space-y-4">
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Customizable sharing permissions
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Complete access tracking
+                    </li>
+                    <li class="flex items-center">
+                        <svg class="w-6 h-6 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4.01M4 12h4.01M3 16.2439C3 17.1783 3.64201 17.9169 4.5547 18.0355C6.49531 18.3017 9.11001 18.621 12 19C14.89 18.621 17.5047 18.3017 19.4453 18.0355C20.358 17.9169 21 17.1783 21 16.2439V11.8194C21 11.0597 20.4656 10.4175 19.7137 10.3269C17.521 10.0746 14.8192 9.76846 12 9.41423"></path>
+                        </svg>
+                        Export and transfer records
+                    </li>
+                </ul>
+            </div>
+            <div class="md:w-1/2">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">Personal Data Dashboard</h3>
+                    <p class="text-gray-700 mb-4">Monitor and manage every interaction with your health data.</p>
+                    <div class="flex items-center bg-blue-50 p-3 rounded">
+                        <svg class="w-8 h-8 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2"></path>
+                        </svg>
+                        <span>Complete transparency</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+  
+    <!-- Call to Action Section -->
+    <section class="bg-blue-600 py-12 text-center text-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-extrabold mb-4">Ready to get started?</h2>
+            <p class="text-lg mb-8">Join our platform to ensure your health records are accessible when you need them the most.</p>
+            <a href="register.html" class="px-8 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-gray-200 transition duration-300">Create an Account</a>
+        </div>
+    </section>
+
+</body>
+</html>

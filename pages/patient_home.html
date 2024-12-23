@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Record System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold">Health Record System</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="register.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Register</a>
+                    <a href="login.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-white">
+        <div class="container mx-auto py-16 px-4 text-center">
+            <!-- Image before welcome text -->
+            <div class="mb-8">
+                <img src="images/patienthome.svg"Patient Home Page" class="w-full h-full object-cover">
+            </div>
+             <!-- Welcome Text -->
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Welcome to the Health Record System</h1>
+            <p class="text-lg text-gray-600 mb-8">A platform designed for secure and easy access to health records, empowering doctors and patients to connect seamlessly.</p>
+            <div class="flex justify-center space-x-4 mb-8">
+                <a href="register.html" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition duration-300">Register</a>
+                <a href="login.html" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-gray-300 transition duration-300">Login</a>
+            </div>
+
+            <!-- Search Form -->
+            <div class="max-w-md mx-auto">
+                <form id="searchForm" class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <input type="text" id="uniqueId" placeholder="Enter Unique ID" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500" required>
+                    <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition duration-300">Search</button>
+                </form>
+            </div>
+
+            <!-- Results Container -->
+            <div id="results" class="mt-8 max-w-3xl mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+     
+    <!-- What do you want to see Section -->
+    <div id="dashboardView" class="block">
+        <section class="bg-gray-50 py-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-3xl font-extrabold text-gray-800 text-center mb-8">What do you want to see?</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div onclick="showBloodGroupSearch()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Blood Group</h3>
+                    <p class="text-gray-600">Search users' Blood Group</p>
+                </div>
+    
+                <div onclick="showAppointments()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Appointments</h3>
+                    <p class="text-gray-600">Book doctor's appointments.</p>
+                </div>
+    
+                <div onclick="showMedicalSearch()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Search Medical</h3>
+                    <p class="text-gray-600">Find all medicals in a specific district</p>
+                </div>
+    
+                <div onclick="showDoctorSearch()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Search Doctors</h3>
+                    <p class="text-gray-600">Find doctors by symptoms and disease</p>
+                </div>
+    
+                <div onclick="showPrescriptionSearch()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Search Prescriptions</h3>
+                    <p class="text-gray-600">Find recent prescriptions by disease name</p>
+                </div>
+    
+                <div onclick="showFeedbackForm()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Submit Feedback</h3>
+                    <p class="text-gray-600">Provide feedback on your treatment.</p>
+                </div>
+    
+                <div onclick="showDiseaseSearchBySymptoms()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Search Diseases by Symptoms</h3>
+                    <p class="text-gray-600">Find diseases matching specific symptoms.</p>
+                </div>
+    
+                <div onclick="showDoctorSearchBySpecialist()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Search Doctors by Specialist</h3>
+                    <p class="text-gray-600">Find doctors based on their specialization.</p>
+                </div>
+    
+                <div onclick="showBillPayment()" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+                    <svg class="w-10 h-10 text-blue-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">Pay Bill</h3>
+                    <p class="text-gray-600">Process your medical bill payment</p>
+                </div>
+            </div>
+                    
+        
+                    
+                </div>
+            </div>
+        </section>
+    </div>
+
+<!-- Blood Group Search Form -->
+<div id="bloodGroupSearch" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button 
+            onclick="showDashboard()" 
+            class="text-blue-600 hover:text-blue-700 flex items-center"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+    <h2 class="text-2xl font-bold mb-4 text-center">Search by Blood Group</h2>
+    <form id="bloodGroupForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Blood Group</label>
+            <select id="bloodGroup" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Search
+        </button>
+    </form>
+    <div id="bloodGroupResults" class="mt-6"></div>
+</div>
+
+
+<div id="appointmentsView" class="min-h-screen" style="display: none;">
+    <div class="flex min-h-[calc(100vh-4rem)]">
+        <!-- Left section with image - Background now matches grid -->
+        <div class="hidden md:flex md:w-1/2 bg-gray-100 items-center justify-center p-8">
+            <div class="bg-gray-100 p-8 rounded-lg w-full flex justify-center">
+                <img src="images/appointment.svg" alt="Appointment" class="w-full h-full object-cover">
+            </div>
+        </div>
+     <!-- right section -->
+     <div class="w-full md:w-1/2 p-8 overflow-y-auto">
+        <div class="max-w-md mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Book Your Appointment</h2>
+                <button onclick="showDashboard()" class="blue-600 hover:text-blue-700">← Back</button>
+            </div>
+            
+            <form id="appointmentForm" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Patient ID</label>
+                    <input
+                        type="text"
+                        id="patient_id"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
+                        required
+                        onchange="checkAvailability()"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Doctor ID</label>
+                    <input
+                        type="text"
+                        id="doctor_id"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
+                        required
+                        onchange="checkAvailability()"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Appointment Date</label>
+                    <input
+                        type="date"
+                        id="appointment_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
+                        required
+                        onchange="checkAvailability()"
+                    />
+                </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Available Time Slots</label>
+                        <div id="timeSlots" class="grid grid-cols-3 gap-2">
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="09:00">9:00 AM</button>
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="10:00">10:00 AM</button>
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="11:00">11:00 AM</button>
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="14:00">2:00 PM</button>
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="15:00">3:00 PM</button>
+                            <button type="button" class="time-slot px-4 py-2 text-sm border rounded-md" data-time="16:00">4:00 PM</button>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button
+                            type="submit"
+                            class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                        >
+                            Book Appointment
+                        </button>
+                        <button
+                            type="button"
+                            onclick="showDashboard()"
+                            class="flex-1 bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors text-center"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-12">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Your Appointments</h3>
+                    <div id="appointmentsList" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="medicalSearch" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Search Medical Facilities by District</h2>
+    <form id="medicalSearchForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">District</label>
+            <input type="text" id="medicalDistrict" placeholder="Enter district name" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">Search</button>
+    </form>
+    <div id="medicalSearchResults" class="mt-6"></div>
+</div>
+
+
+
+
+<!-- Doctor Search Section -->
+<div id="doctorSearch" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+    <h2 class="text-2xl font-bold mb-4 text-center">Search Doctors by Symptoms</h2>
+    <form id="doctorSearchForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Symptoms</label>
+            <input 
+                type="text" 
+                id="symptomsInput" 
+                placeholder="Enter symptoms (e.g., fever, headache)" 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Disease Name (Optional)</label>
+            <input 
+                type="text" 
+                id="diseaseNameOptionalInput" 
+                placeholder="Enter disease name (e.g., Diabetes)" 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Search
+        </button>
+    </form>
+    <div id="doctorSearchResults" class="mt-6"></div>
+</div>
+
+
+<!-- Prescription Search Section -->
+<div id="prescriptionSearch" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Search Prescription by Disease Name</h2>
+    <form id="prescriptionSearchForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Disease Name</label>
+            <input
+                type="text"
+                id="prescriptionDiseaseName"
+                placeholder="Enter disease name"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Search
+        </button>
+    </form>
+    <div id="prescriptionSearchResults" class="mt-6"></div>
+</div>
+
+<!-- Feedback Form Section -->
+<div id="feedbackForm" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="goBackToMainView()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+    <h2 class="text-2xl font-bold mb-4 text-center">Submit Feedback</h2>
+    <form id="feedbackFormSubmit" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Unique ID</label>
+            <input 
+                type="text" 
+                id="feedbackPatientID" 
+                placeholder="Enter your Unique ID" 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Feedback</label>
+            <textarea 
+                id="feedbackInput" 
+                placeholder="Write your feedback here..." 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            ></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Submit Feedback
+        </button>
+    </form>
+    <div id="feedbackSubmitStatus" class="mt-6"></div>
+</div>
+
+
+
+
+
+<div id="diseaseSearchBySymptoms" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Search Diseases by Symptoms</h2>
+
+    <form id="diseaseSearchBySymptomsForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Symptoms</label>
+            <input
+                type="text"
+                id="searchSymptoms"
+                placeholder="Enter symptoms (e.g., fever, headache)"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Search
+        </button>
+    </form>
+
+    <div id="symptomSearchResults" class="mt-6"></div> <!-- Changed ID -->
+</div>
+
+<div id="doctorSearchBySpecialist" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative" style="display: none;">
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Search Doctors by Specialist</h2>
+
+    <form id="doctorSearchBySpecialistForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Specialist</label>
+            <input
+                type="text"
+                id="searchSpecialist"
+                placeholder="Enter specialization (e.g., Cardiologist)"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Search
+        </button>
+    </form>
+
+    <div id="specialistSearchResults" class="mt-6"></div>
+</div>
+
+
+
+   
+
+
+
+
+
+  <div id="billPaymentView" style="display: none;" class="bg-white p-6 rounded-lg shadow-lg max-w-7xl mx-auto mt-12 mb-16 relative">
+    <!-- Back button -->
+    <div class="absolute top-4 right-4">
+        <button onclick="showDashboard()" class="text-blue-600 hover:text-blue-700 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-center">Bill Payment</h2>
+    
+    <form id="billPaymentForm" class="space-y-4">
+        <div>
+            <label class="block text-gray-700 mb-2">Unique ID</label>
+            <input 
+                type="text" 
+                id="billUniqueId" 
+                placeholder="Enter your Unique ID" 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        
+        <div>
+            <label class="block text-gray-700 mb-2">Billing Amount</label>
+            <input 
+                type="number" 
+                id="billingAmount" 
+                placeholder="Enter billing amount" 
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+            />
+        </div>
+        
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300">
+            Process Payment
+        </button>
+    </form>
+    
+    <div id="billPaymentResults" class="mt-6"></div>
+</div>
+
+
+    <!-- Call to Action Section -->
+    <section class="bg-blue-600 py-12 text-center text-white">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-extrabold mb-4">Ready to get started?</h2>
+            <p class="text-lg mb-8">Join our platform to ensure your health records are accessible when you need them the most.</p>
+            <a href="register.html" class="px-8 py-3 bg-white text-blue-600 font-bold rounded-md hover:bg-gray-200 transition duration-300">Create an Account</a>
+        </div>
+    </section>
+
+    <script>
+        function goBackToMainView() {
+    // Hide the disease search section
+    document.getElementById('diseaseSearch').style.display = 'none';
+    
+    // Show the dashboard view
+    document.getElementById('dashboardView').style.display = 'block';
+    
+    // Clear the form
+    document.getElementById('diseaseSearchForm').reset();
+    // Clear the results
+    document.getElementById('diseaseSearchResults').innerHTML = '';
+}
+        // JavaScript function to calculate age and display it in the age input field
+        function calculateAge() {
+            const dob = document.getElementById("dob").value;
+            if (!dob) return;
+    
+            const dobDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - dobDate.getFullYear();
+            const monthDiff = today.getMonth() - dobDate.getMonth();
+    
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+                age--;
+            }
+            document.getElementById("age").value = age;
+        }
+    
+        // Fetch data from the server for the provided unique ID
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const uniqueId = document.getElementById('uniqueId').value.trim();
+    
+            // Clear previous results
+            document.getElementById('results').innerHTML = '';
+    
+            if (uniqueId === '') {
+                alert('Please enter a Unique ID.');
+                return;
+            }
+    
+            fetch(`http://localhost:3000/search_user/${uniqueId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            throw new Error('User not found.');
+                        } else {
+                            throw new Error('An error occurred while searching.');
+                        }
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayResults(data);
+                })
+                .catch(error => {
+                    document.getElementById('results').innerHTML = `
+                        <p class="text-red-500 text-center">${error.message}</p>
+                    `;
+                });
+        });
+    
+        // Function to display results in a table format
+        function displayResults(data) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+    
+            // Check if the ID belongs to a medical institution
+            if (data.type === "medical") {
+                let medicalInfoHtml = `
+                    <h2 class="text-2xl font-bold mb-4">Medical Institution Information</h2>
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead>
+                            <tr><th class="px-4 py-2 border-b">Field</th><th class="px-4 py-2 border-b">Value</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="px-4 py-2 border-b">Medical Name</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.medical_name)}</td></tr>
+                            <tr><td class="px-4 py-2 border-b">License Number</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.license_number)}</td></tr>
+                            <tr><td class="px-4 py-2 border-b">Phone</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.phone)}</td></tr>
+                            <tr><td class="px-4 py-2 border-b">Email</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.email)}</td></tr>
+                            <tr><td class="px-4 py-2 border-b">Address</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.address)}</td></tr>
+                            <tr><td class="px-4 py-2 border-b">District</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.details.district)}</td></tr>
+                        </tbody>
+                    </table>
+                `;
+                resultsContainer.innerHTML = medicalInfoHtml;
+                return;
+            }
+    
+            // User Information table
+            let userInfoHtml = `
+                <h2 class="text-2xl font-bold mb-4">User Information</h2>
+                <table class="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr><th class="px-4 py-2 border-b">Field</th><th class="px-4 py-2 border-b">Value</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="px-4 py-2 border-b">Full Name</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.fullname)}</td></tr>
+                        <tr><td class="px-4 py-2 border-b">Age</td><td class="px-4 py-2 border-b">${data.userInfo.age}</td></tr>
+                        <tr><td class="px-4 py-2 border-b">Blood Group</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.blood_group || 'N/A')}</td></tr>
+                        <tr><td class="px-4 py-2 border-b">District</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.district || 'N/A')}</td></tr>
+                        <tr><td class="px-4 py-2 border-b">User Type</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.user_type)}</td></tr>
+                    `;
+            if (data.userInfo.user_type === "doctor") {
+                userInfoHtml += `
+                    <tr><td class="px-4 py-2 border-b">Medical Name</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.medical_name)}</td></tr>
+                    <tr><td class="px-4 py-2 border-b">License Number</td><td class="px-4 py-2 border-b">${sanitizeHTML(data.userInfo.license_number)}</td></tr>
+                `;
+            }
+            userInfoHtml += `</tbody></table>`;
+            
+            resultsContainer.innerHTML = userInfoHtml;
+    
+            // Medical Records Table if available
+            let medicalRecordsHtml = `<h2 class="text-2xl font-bold mt-8 mb-4">Medical Records</h2>`;
+if (Array.isArray(data.records) && data.records.length > 0) {
+    medicalRecordsHtml += `
+        <div class="overflow-x-auto w-full">
+            <table class="min-w-full bg-white border border-gray-200">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border-b">Record ID</th>
+                        <th class="px-4 py-2 border-b">Disease Name</th>
+                        <th class="px-4 py-2 border-b">Symptoms</th>
+                        <th class="px-4 py-2 border-b">Admitted Medical ID</th>
+                        <th class="px-4 py-2 border-b">Admitted Medical Name</th>
+                        <th class="px-4 py-2 border-b">Admitted Bed No</th>
+                        <th class="px-4 py-2 border-b">Doctor ID</th>
+                        <th class="px-4 py-2 border-b">Doctor Name</th>
+                        <th class="px-4 py-2 border-b">Admission Date</th>
+                        <th class="px-4 py-2 border-b">Discharge Date</th>
+                        <th class="px-4 py-2 border-b">Taken Medicine</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    data.records.forEach(record => {
+        medicalRecordsHtml += `
+            <tr>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.id)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.disease_name)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.symptoms)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.admitted_medical_id)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.admitted_medical_name)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.admitted_bed_no)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.doctor_id)}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.doctor_name)}</td>
+                <td class="px-4 py-2 border-b">${record.admission_date}</td>
+                <td class="px-4 py-2 border-b">${record.discharge_date}</td>
+                <td class="px-4 py-2 border-b">${sanitizeHTML(record.taken_medicine)}</td>
+            </tr>
+        `;
+    });
+    medicalRecordsHtml += `</tbody></table></div>`;
+} else {
+    medicalRecordsHtml += '<p>No medical records available.</p>';
+}
+
+resultsContainer.innerHTML += medicalRecordsHtml;
+
+        }
+    
+        function sanitizeHTML(str) {
+            const element = document.createElement('div');
+            if (str) {
+                element.innerText = str;
+                element.textContent = str;
+            }
+            return element.innerHTML;
+        }
+ // JavaScript function to calculate age and display it in the age input field
+ function calculateAge() {
+        const dob = document.getElementById("dob").value;
+        if (!dob) return;
+
+        const dobDate = new Date(dob);
+        const today = new Date();
+        let age = today.getFullYear() - dobDate.getFullYear();
+        const monthDiff = today.getMonth() - dobDate.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+            age--;
+        }
+        document.getElementById("age").value = age;
+    }
+
+
+document.getElementById('bloodGroupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const bloodGroup = document.getElementById('bloodGroup').value.trim();
+
+    document.getElementById('bloodGroupResults').innerHTML = '';
+
+    if (bloodGroup === '') {
+        alert('Please select a Blood Group.');
+        return;
+    }
+
+    // Display a loading message
+    document.getElementById('bloodGroupResults').innerHTML = '<p>Loading...</p>';
+
+    fetch(`http://localhost:3000/search_by_blood_group/${bloodGroup}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching users with the selected blood group.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayBloodGroupResults(data);
+        })
+        .catch(error => {
+            document.getElementById('bloodGroupResults').innerHTML = `
+                <p class="text-red-500 text-center">${error.message}</p>
+            `;
+        });
+});
+
+function displayBloodGroupResults(data) {
+    const resultsContainer = document.getElementById('bloodGroupResults');
+    resultsContainer.innerHTML = '';
+
+    if (Array.isArray(data) && data.length > 0) {
+        const totalSameBloodGroup = data[0].Total_Same_Blood_Group; // Get the total count from the first record
+        
+        let resultsHtml = `
+            <h3 class="text-xl font-bold mb-6">Users with Blood Group ${sanitizeHTML(data[0].Blood_Group)}</h3>
+            <p class="text-gray-1000 mb-4 pb-4">
+    <strong>Total</strong> <strong>Users</strong> <strong>with</strong> <strong>this</strong> <strong>Blood</strong> <strong>Group:</strong> 
+    <strong>${totalSameBloodGroup}</strong>
+</p>
+
+
+            <div class="w-full mb-8">
+                <table class="min-w-full bg-white border border-gray-200 shadow-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 border-b text-left">Unique ID</th>
+                            <th class="px-6 py-3 border-b text-left">Full Name</th>
+                            <th class="px-6 py-3 border-b text-left">Blood Group</th>
+                            <th class="px-6 py-3 border-b text-left">Age</th>
+                            <th class="px-6 py-3 border-b text-left">District</th>
+                            <th class="px-6 py-3 border-b text-left">Contact Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        data.forEach(user => {
+            resultsHtml += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(user.Unique_ID)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(user.Name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(user.Blood_Group)}</td>
+                    <td class="px-6 py-4 border-b">${user.Age}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(user.District || 'N/A')}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(user.Contact_Number || 'N/A')}</td>
+                </tr>
+            `;
+        });
+        
+        resultsHtml += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        resultsContainer.innerHTML = resultsHtml;
+    } else {
+        resultsContainer.innerHTML = '<p class="text-gray-600 mb-8">No users found with the selected blood group.</p>';
+    }
+}
+
+// Helper function to sanitize HTML to prevent XSS attacks
+function sanitizeHTML(str) {
+    const element = document.createElement('div');
+    element.textContent = str || '';
+    return element.innerHTML;
+}
+
+        
+// First, modify the initial HTML structure to hide Blood Group and Appointments sections
+document.getElementById('bloodGroupSearch').style.display = 'none';
+document.getElementById('appointmentsView').style.display = 'none';
+
+// Add these functions to manage section visibility
+
+// Add these functions to manage section visibility
+function showDashboard() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+function showBloodGroupSearch() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'block';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+function showAppointments() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'block';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+
+function showMedicalSearch() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'block';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+function showDoctorSearch() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'block';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+function showPrescriptionSearch() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'block';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+// Show Feedback Form
+function showFeedbackForm() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'block';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+
+function showDiseaseSearchBySymptoms() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'block';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+function showDoctorSearchBySpecialist() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'block';
+    document.getElementById('billPaymentView').style.display = 'none';
+}
+
+
+function showBillPayment() {
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('medicalSearch').style.display = 'none';
+    document.getElementById('bloodGroupSearch').style.display = 'none';
+    document.getElementById('appointmentsView').style.display = 'none';
+    document.getElementById('doctorSearch').style.display = 'none';
+    document.getElementById('prescriptionSearch').style.display = 'none';
+    document.getElementById('feedbackForm').style.display = 'none';
+    document.getElementById('diseaseSearchBySymptoms').style.display = 'none';
+    document.getElementById('doctorSearchBySpecialist').style.display = 'none';
+    document.getElementById('billPaymentView').style.display = 'block';
+}
+// Event listener for disease search form
+ 
+   
+document.getElementById('medicalSearchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const district = document.getElementById('medicalDistrict').value.trim();
+    document.getElementById('medicalSearchResults').innerHTML = '';
+
+    if (district === '') {
+        alert('Please enter a district name.');
+        return;
+    }
+
+    document.getElementById('medicalSearchResults').innerHTML = '<p>Loading...</p>';
+
+    fetch(`http://localhost:3000/search_medicals_by_district?district=${encodeURIComponent(district)}`)
+        .then(response => {
+            if (!response.ok) throw new Error('Error fetching medical facilities.');
+            return response.json();
+        })
+        .then(data => {
+            displayMedicalSearchResults(data);
+        })
+        .catch(error => {
+            document.getElementById('medicalSearchResults').innerHTML = `<p class="text-red-500 text-center">${error.message}</p>`;
+        });
+});
+
+function displayMedicalSearchResults(data) {
+    const resultsContainer = document.getElementById('medicalSearchResults');
+    resultsContainer.innerHTML = '';
+
+    if (Array.isArray(data) && data.length > 0) {
+        let resultsHtml = `
+            <h3 class="text-xl font-bold mb-6">Medical Facilities in ${sanitizeHTML(data[0].district)}</h3>
+            <table class="min-w-full bg-white border border-gray-200 shadow-sm">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 border-b text-left">Medical Name</th>
+                        <th class="px-6 py-3 border-b text-left">License Number</th>
+                        <th class="px-6 py-3 border-b text-left">Phone</th>
+                        <th class="px-6 py-3 border-b text-left">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        data.forEach(medical => {
+            resultsHtml += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(medical.medical_name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(medical.license_number)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(medical.phone)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(medical.address)}</td>
+                </tr>
+            `;
+        });
+        resultsHtml += `</tbody></table>`;
+        resultsContainer.innerHTML = resultsHtml;
+    } else {
+        resultsContainer.innerHTML = '<p class="text-gray-600 mb-8">No medical facilities found in the selected district.</p>';
+    }
+}
+
+
+    
+
+
+document.getElementById('doctorSearchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const symptoms = document.getElementById('symptomsInput').value.trim();
+    const diseaseName = document.getElementById('diseaseNameOptionalInput').value.trim();
+
+    document.getElementById('doctorSearchResults').innerHTML = '<p>Loading...</p>';
+
+    fetch(`http://localhost:3000/search_doctors?symptoms=${encodeURIComponent(symptoms)}&disease=${encodeURIComponent(diseaseName)}`)
+        .then(response => response.json())
+        .then(data => displayDoctorSearchResults(data))
+        .catch(error => {
+            document.getElementById('doctorSearchResults').innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+        });
+});
+
+function displayDoctorSearchResults(data) {
+    const resultsContainer = document.getElementById('doctorSearchResults');
+    if (data.length === 0) {
+        resultsContainer.innerHTML = '<p class="text-gray-600">No doctors found.</p>';
+        return;
+    }
+
+    let html = `<table class="min-w-full bg-white border border-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">Doctor ID</th>
+                            <th class="px-4 py-2">Name</th>
+                            <th class="px-4 py-2">Phone</th>
+                            <th class="px-4 py-2">Email</th>
+                            <th class="px-4 py-2">Medical Center</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+    data.forEach(doctor => {
+        html += `<tr>
+                    <td class="px-4 py-2">${doctor.doctor_id}</td>
+                    <td class="px-4 py-2">${doctor.fullname}</td>
+                    <td class="px-4 py-2">${doctor.phone}</td>
+                    <td class="px-4 py-2">${doctor.email}</td>
+                    <td class="px-4 py-2">${doctor.medical_name}</td>
+                </tr>`;
+    });
+
+    html += `</tbody></table>`;
+    resultsContainer.innerHTML = html;
+}
+
+
+// Form Submission Handler
+document.getElementById('prescriptionSearchForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const diseaseName = document.getElementById('prescriptionDiseaseName').value.trim();
+    const resultsContainer = document.getElementById('prescriptionSearchResults');
+
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    if (diseaseName === '') {
+        alert('Please enter a disease name.');
+        return;
+    }
+
+    resultsContainer.innerHTML = '<p>Loading...</p>'; // Show loading message
+
+    fetch(`http://localhost:3000/search_prescriptions_by_disease?disease=${encodeURIComponent(diseaseName)}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // For Debugging
+            displayPrescriptionSearchResults(data);
+        })
+        .catch(error => {
+            console.error(error);
+            resultsContainer.innerHTML = `<p class="text-red-500 text-center">${error.message}</p>`;
+        });
+});
+
+// Display Results
+function displayPrescriptionSearchResults(data) {
+    const resultsContainer = document.getElementById('prescriptionSearchResults');
+    resultsContainer.innerHTML = '';
+
+    if (Array.isArray(data) && data.length > 0) {
+        let resultsHtml = `
+            <h3 class="text-xl font-bold mb-6">Recent Records for: ${sanitizeHTML(data[0].disease_name)}</h3>
+            <div class="w-full mb-8">
+                <table class="min-w-full bg-white border border-gray-200 shadow-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 border-b text-left">Disease Name</th>
+                            <th class="px-6 py-3 border-b text-left">Symptoms</th>
+                            <th class="px-6 py-3 border-b text-left">Prescriptions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        data.forEach(record => {
+            resultsHtml += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(record.disease_name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(record.symptoms || 'N/A')}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(record.prescriptions || 'N/A')}</td>
+                </tr>
+            `;
+        });
+
+        resultsHtml += `</tbody></table></div>`;
+        resultsContainer.innerHTML = resultsHtml;
+    } else {
+        resultsContainer.innerHTML = '<p>No records found for the selected disease.</p>';
+    }
+}
+
+function sanitizeHTML(str) {
+    const temp = document.createElement('div');
+    temp.textContent = str || 'N/A';
+    return temp.innerHTML;
+}
+
+
+// Handle Feedback Form Submission
+document.getElementById('feedbackFormSubmit').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const patientID = document.getElementById('feedbackPatientID').value.trim();
+    const feedback = document.getElementById('feedbackInput').value.trim();
+
+    document.getElementById('feedbackSubmitStatus').innerHTML = 'Submitting feedback...';
+
+    fetch('http://localhost:3000/submit_feedback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ patientID, feedback })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('feedbackSubmitStatus').innerHTML = 'Feedback submitted successfully!';
+        } else {
+            document.getElementById('feedbackSubmitStatus').innerHTML = 'Failed to submit feedback.';
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        document.getElementById('feedbackSubmitStatus').innerHTML = 'An error occurred.';
+    });
+});
+
+// Go back to main view
+function goBackToMainView() {
+    // Show main dashboard and hide feedback form
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('feedbackForm').style.display = 'none';
+}
+
+
+
+
+
+
+
+document.getElementById('diseaseSearchBySymptomsForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const symptoms = document.getElementById('searchSymptoms').value.trim();
+    document.getElementById('symptomSearchResults').innerHTML = ''; // Changed ID
+
+    if (!symptoms) {
+        alert('Please enter symptoms.');
+        return;
+    }
+
+    document.getElementById('symptomSearchResults').innerHTML = '<p>Loading...</p>'; // Changed ID
+
+    fetch(`http://localhost:3000/search_diseases_by_symptoms?symptoms=${encodeURIComponent(symptoms)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching diseases.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displaySymptomSearchResults(data); // Updated function name
+        })
+        .catch(error => {
+            document.getElementById('symptomSearchResults').innerHTML = ` <!-- Changed ID -->
+                <p class="text-red-500 text-center">${error.message}</p>
+            `;
+        });
+});
+
+function displaySymptomSearchResults(data) { // Updated function name
+    const resultsContainer = document.getElementById('symptomSearchResults'); // Changed ID
+    resultsContainer.innerHTML = '';
+
+    if (Array.isArray(data) && data.length > 0) {
+        let resultsHtml = `
+            <h3 class="text-xl font-bold mb-6">Diseases and Symptoms</h3>
+            <div class="w-full mb-8">
+                <table class="min-w-full bg-white border border-gray-200 shadow-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 border-b text-left">Disease Name</th>
+                            <th class="px-6 py-3 border-b text-left">Symptoms</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        data.forEach(record => {
+            resultsHtml += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(record.Disease_Name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(record.Symptoms)}</td>
+                </tr>
+            `;
+        });
+
+        resultsHtml += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        resultsContainer.innerHTML = resultsHtml;
+    } else {
+        resultsContainer.innerHTML = '<p>No diseases found for the provided symptoms.</p>';
+    }
+}
+
+document.getElementById('doctorSearchBySpecialistForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const specialist = document.getElementById('searchSpecialist').value.trim();
+    document.getElementById('specialistSearchResults').innerHTML = '';
+
+    if (!specialist) {
+        alert('Please enter a specialization.');
+        return;
+    }
+
+    document.getElementById('specialistSearchResults').innerHTML = '<p>Loading...</p>';
+
+    fetch(`http://localhost:3000/search_doctors_by_specialist?specialist=${encodeURIComponent(specialist)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching doctors.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displaySpecialistSearchResults(data);
+        })
+        .catch(error => {
+            document.getElementById('specialistSearchResults').innerHTML = `
+                <p class="text-red-500 text-center">${error.message}</p>
+            `;
+        });
+});
+
+function displaySpecialistSearchResults(data) {
+    const resultsContainer = document.getElementById('specialistSearchResults');
+    resultsContainer.innerHTML = '';
+
+    if (Array.isArray(data) && data.length > 0) {
+        let resultsHtml = `
+            <h3 class="text-xl font-bold mb-6">Doctors by Specialization</h3>
+            <div class="w-full mb-8">
+                <table class="min-w-full bg-white border border-gray-200 shadow-sm">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 border-b text-left">Specialist</th>
+                            <th class="px-6 py-3 border-b text-left">Doctor ID</th>
+                            <th class="px-6 py-3 border-b text-left">Doctor Name</th>
+                            <th class="px-6 py-3 border-b text-left">Studied Medical Name</th>
+                            <th class="px-6 py-3 border-b text-left">License Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        data.forEach(doctor => {
+            resultsHtml += `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(doctor.Specialist)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(doctor.Doctor_ID)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(doctor.Doctor_Name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(doctor.Studied_Medical_Name)}</td>
+                    <td class="px-6 py-4 border-b">${sanitizeHTML(doctor.License_Number)}</td>
+                </tr>
+            `;
+        });
+
+        resultsHtml += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        resultsContainer.innerHTML = resultsHtml;
+    } else {
+        resultsContainer.innerHTML = '<p>No doctors found for the provided specialization.</p>';
+    }
+}
+
+
+
+
+
+
+
+
+// Event listener for bill payment form
+document.getElementById('billPaymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const uniqueId = document.getElementById('billUniqueId').value.trim();
+    const billingAmount = document.getElementById('billingAmount').value.trim();
+    
+    document.getElementById('billPaymentResults').innerHTML = '<p>Processing...</p>';
+    
+    fetch('http://localhost:3000/process_bill_payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+            uniqueId: uniqueId, 
+            billingAmount: parseFloat(billingAmount) 
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Payment processing failed');
+        }
+        return response.json();
+    })
+    .then(data => {
+        displayBillPaymentResults(data);
+    })
+    .catch(error => {
+        document.getElementById('billPaymentResults').innerHTML = `
+            <p class="text-red-500 text-center">${error.message}</p>
+        `;
+    });
+});
+
+function displayBillPaymentResults(data) {
+    const resultsContainer = document.getElementById('billPaymentResults');
+
+    resultsContainer.innerHTML = `
+        <table class="w-full border-collapse">
+            <thead>
+                <tr class="bg-green-200 text-green-800">
+                    <th colspan="2" class="text-center font-bold py-2">Payment Successful!</th>
+                </tr>
+    
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border border-green-300 px-4 py-2 font-bold">Unique ID</td>
+                    <td class="border border-green-300 px-4 py-2">${sanitizeHTML(data.uniqueId)}</td>
+                </tr>
+                <tr>
+                    <td class="border border-green-300 px-4 py-2 font-bold">Name</td>
+                    <td class="border border-green-300 px-4 py-2">${sanitizeHTML(data.name)}</td>
+                </tr>
+                <tr>
+                    <td class="border border-green-300 px-4 py-2 font-bold">Original Bill Amount</td>
+                    <td class="border border-green-300 px-4 py-2">${data.originalAmount.toFixed(2)}</td>
+                </tr>
+                <tr>
+                    <td class="border border-green-300 px-4 py-2 font-bold">Discount</td>
+                    <td class="border border-green-300 px-4 py-2">${data.discountPercentage}%</td>
+                </tr>
+                <tr>
+                    <td class="border border-green-300 px-4 py-2 font-bold">Final Payable Amount</td>
+                    <td class="border border-green-300 px-4 py-2">${data.payableAmount.toFixed(2)}</td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+}
+    </script>
+    
+    
+
+</body>
+</html>

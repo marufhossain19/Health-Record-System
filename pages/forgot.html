@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password - Health Record System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .main-bg-color {
+            background-color: #2563EB;
+        }
+    </style>
+</head>
+<body class="main-bg-color text-white min-h-screen">
+    <nav class="flex justify-between items-center max-w-7xl mx-auto px-4 py-4">
+        <a href="home.html" class="text-2xl font-bold text-white">Health Record System</a>
+        <div class="space-x-4">
+            <a href="index.html" class="text-white hover:text-gray-300">Home</a>
+            <a href="register.html" class="text-white hover:text-gray-300">Register</a>
+        </div>
+    </nav>
+
+    <div class="min-h-screen flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl w-full">
+            <!-- Left Section: Image/Illustration -->
+            <div class="flex justify-center items-center">
+                <!-- Replace with your actual image or SVG -->
+                <img src="images/forgotpassword.svg" alt="Forgot Password Page" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Right Section: Forgot Password Form -->
+            <div class="max-w-md w-full space-y-8 bg-white text-gray-900 p-8 mb-20 rounded-lg shadow-lg">
+                <div>
+                    <h2 class="mt-6 text-center text-3xl font-extrabold text-blue-600">
+                        Reset Your Password
+                    </h2>
+                </div>
+
+                <form id="resetPasswordForm" class="mt-8 space-y-6" method="POST">
+                    <!-- Unique ID Field -->
+                    <div class="rounded-md shadow-sm -space-y-px">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Unique ID</label>
+                            <input 
+                                type="text" 
+                                id="uniqueId" 
+                                name="uniqueId" 
+                                required 
+                                class="mt-1 p-2 w-full border rounded-md"
+                                placeholder="Enter your unique ID"
+                            >
+                        </div>
+
+                        <!-- Contact Method Selection -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Verification Method</label>
+                            <select 
+                                id="verificationMethod" 
+                                name="verificationMethod" 
+                                class="mt-1 p-2 w-full border rounded-md"
+                                onchange="toggleVerificationFields()"
+                            >
+                                <option value="phone">Phone Number</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div id="phoneField">
+                            <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                class="mt-1 p-2 w-full border rounded-md" 
+                                placeholder="Enter your phone number"
+                            >
+                        </div>
+
+                        <!-- Email Field -->
+                        <div id="emailField" class="hidden">
+                            <label class="block text-sm font-medium text-gray-700">Email</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="mt-1 p-2 w-full border rounded-md" 
+                                placeholder="Enter your email address"
+                            >
+                        </div>
+
+                        <!-- New Password Fields (Initially Hidden) -->
+                        <div id="passwordFields" class="hidden space-y-4 mt-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">New Password</label>
+                                <input 
+                                    type="password" 
+                                    id="newPassword" 
+                                    name="newPassword" 
+                                    class="mt-1 p-2 w-full border rounded-md" 
+                                    placeholder="Enter new password"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                                <input 
+                                    type="password" 
+                                    id="confirmPassword" 
+                                    name="confirmPassword" 
+                                    class="mt-1 p-2 w-full border rounded-md" 
+                                    placeholder="Confirm new password"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error/Success Message Display -->
+                    <div id="messageDisplay" class="text-sm"></div>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <button 
+                            type="submit" 
+                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            Verify 
+                        </button>
+                    </div>
+
+                    <!-- Remember Password Link -->
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">
+                            Remembered your password? 
+                            <a href="login.html" class="font-medium text-blue-600 hover:text-blue-500">
+                                Log in
+                            </a>
+                        </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    function toggleVerificationFields() {
+        const method = document.getElementById('verificationMethod').value;
+        const phoneField = document.getElementById('phoneField');
+        const emailField = document.getElementById('emailField');
+        
+        phoneField.classList.add('hidden');
+        emailField.classList.add('hidden');
+        
+        if (method === 'phone') {
+            phoneField.classList.remove('hidden');
+        } else if (method === 'email') {
+            emailField.classList.remove('hidden');
+        }
+    }
+
+    function validatePasswords() {
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        return newPassword === confirmPassword;
+    }
+
+    function displayMessage(message, isError = false) {
+        const messageDisplay = document.getElementById('messageDisplay');
+        messageDisplay.textContent = message;
+        messageDisplay.className = `text-sm ${isError ? 'text-red-600' : 'text-green-600'}`;
+    }
+
+    function validateUniqueId(uniqueId) {
+        if (!uniqueId) return false;
+        
+        // For medical users (starts with M or m)
+        if (uniqueId.toLowerCase().startsWith('m')) {
+            // Add any additional validation rules for medical IDs
+            return uniqueId.length >= 2; // Example validation
+        }
+        
+        // For other users (patients, doctors, admins)
+        // Add any additional validation rules for other user IDs
+        return uniqueId.length >= 1;
+    }
+
+    async function handleResetPassword(event) {
+        event.preventDefault();
+        
+        const uniqueId = document.getElementById('uniqueId').value;
+        const verificationMethod = document.getElementById('verificationMethod').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const passwordFields = document.getElementById('passwordFields');
+
+        // Validate unique ID format
+        if (!validateUniqueId(uniqueId)) {
+            displayMessage('Invalid Unique ID format', true);
+            return;
+        }
+        
+        // First step: Verify user
+        if (passwordFields.classList.contains('hidden')) {
+            try {
+                const response = await fetch('http://localhost:3000/verify-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        uniqueId,
+                        verificationMethod,
+                        phone: verificationMethod === 'phone' ? phone : '',
+                        email: verificationMethod === 'email' ? email : ''
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    passwordFields.classList.remove('hidden');
+                    document.querySelector('button[type="submit"]').textContent = 'Update Password';
+                    // Display different message based on user type
+                    const userTypeMsg = result.userType === 'medical' ? 'Medical' : 'User';
+                    displayMessage(`${userTypeMsg} verified. Please enter your new password.`);
+                } else {
+                    displayMessage(result.message, true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                displayMessage('An error occurred. Please try again.', true);
+            }
+        } 
+        // Second step: Update password
+        else {
+            if (!validatePasswords()) {
+                displayMessage('Passwords do not match!', true);
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:3000/update-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        uniqueId,
+                        newPassword: document.getElementById('newPassword').value
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayMessage('Password updated successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    displayMessage(result.message, true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                displayMessage('An error occurred. Please try again.', true);
+            }
+        }
+    }
+
+    // Add event listeners
+    document.getElementById('resetPasswordForm').addEventListener('submit', handleResetPassword);
+    document.getElementById('verificationMethod').addEventListener('change', toggleVerificationFields);
+    
+    // Initialize verification fields
+    toggleVerificationFields();
+});
+
+    </script>
+    
+    
+</body>
+</html>

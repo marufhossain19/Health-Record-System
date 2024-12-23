@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Patient Data Entry</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    <script>
+        async function fetchPatientDetails() {
+            const patientId = document.getElementById("patient_id").value;
+            if (!patientId) {
+                return;
+            }
+        
+            try {
+                const response = await fetch(`http://localhost:3000/get_user_details/${patientId}`);
+                const data = await response.json();
+        
+                if (response.ok && data) {
+                    document.getElementById("patient_name").value = data.fullname || '';
+                    // Add any additional fields here if necessary
+                    calculateAge(new Date(data.dob));
+                } else {
+                    alert("Patient not found or error fetching details");
+                }
+            } catch (error) {
+                console.error("Error fetching patient details:", error);
+                alert("Error fetching patient details");
+            }
+        }
+        
+        // Function to fetch doctor details
+        async function fetchDoctorDetails() {
+            const doctorId = document.getElementById("doctor_id").value;
+            if (!doctorId) {
+                return;
+            }
+        
+            try {
+                const response = await fetch(`http://localhost:3000/get_doctor_details/${doctorId}`);
+                const data = await response.json();
+        
+                if (response.ok && data) {
+                    document.getElementById("doctor_name").value = data.fullname || ''; // Assuming you want fullname
+                } else {
+                    alert("Doctor not found or error fetching details");
+                }
+            } catch (error) {
+                console.error("Error fetching doctor details:", error);
+                alert("Error fetching doctor details");
+            }
+        }
+        
+        // Function to fetch medical details
+        async function fetchMedicalDetails() {
+            const medicalId = document.getElementById("admitted_medical_id").value; // Assuming you have an input for medical ID
+            if (!medicalId) {
+                return;
+            }
+        
+            try {
+                const response = await fetch(`http://localhost:3000/get_medical_details/${medicalId}`); // Ensure this endpoint is set up in your backend
+                const data = await response.json();
+        
+                if (response.ok && data) {
+                    document.getElementById("admitted_medical_name").value = data.medical_name || ''; // Update to your field name
+                } else {
+                    alert("Medical name not found or error fetching details");
+                }
+            } catch (error) {
+                console.error("Error fetching medical details:", error);
+                alert("Error fetching medical details");
+            }
+        }
+        
+        // Event listeners for ID fields
+        document.addEventListener("DOMContentLoaded", function() {
+            // Patient ID change listener
+            document.getElementById("patient_id").addEventListener("change", function() {
+                fetchPatientDetails();
+            });
+        
+            // Doctor ID change listener
+            document.getElementById("doctor_id").addEventListener("change", fetchDoctorDetails);
+        
+            // Medical ID change listener
+            document.getElementById("admitted_medical_id").addEventListener("change", fetchMedicalDetails);
+        });
+        
+        // Keep the existing helper functions
+        function calculateAge(dobDate) {
+            const today = new Date();
+            let age = today.getFullYear() - dobDate.getFullYear();
+            const monthDiff = today.getMonth() - dobDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+                age--;
+            }
+            
+            document.getElementById("age").value = age;
+        }
+        
+        async function storePatientData() {
+            const formData = new FormData(document.getElementById("patientDataForm"));
+            
+            try {
+                const response = await fetch("http://localhost:3000/submit_patient_data", {
+                    method: "POST",
+                    body: formData
+                });
+        
+                const result = await response.json();
+                if (response.ok) {
+                    alert("Patient data submitted successfully.");
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Request failed: ${error.message}`);
+            }
+        }
+
+        function printReport() {
+            // Implement print functionality
+            window.print();
+        }
+    </script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold">Health Record System</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Home</a>
+                    <a href="admin_home.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Admin Home</a>
+                    <a href="register.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Register</a>
+                    <a href="login.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Patient Data Entry Section -->
+    <div class="min-h-screen p-6 bg-white">
+        <h2 class="text-3xl font-bold text-center text-gray-900 mb-8">Patient Data Entry</h2>
+        <form id="patientDataForm" enctype="multipart/form-data" class="grid grid-cols-3 gap-6">
+            <!-- Patient Details -->
+            <div>
+                <label for="patient_id" class="block text-gray-700">Patient ID</label>
+                <input type="text" id="patient_id" name="patient_id" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div>
+                <label for="patient_name" class="block text-gray-700">Patient Name</label>
+                <input type="text" id="patient_name" name="patient_name" required class="mt-1 p-2 w-full border rounded-md" readonly>
+            </div>
+            <div>
+                <label for="current_address" class="block text-gray-700">Current Address</label>
+                <input type="text" id="current_address" name="current_address" class="mt-1 p-2 w-full border rounded-md">
+            </div>
+
+            <!-- Age, Admitted Medical Name, and Bed No -->
+            <div>
+                <label for="age" class="block text-gray-700">Age</label>
+                <input type="text" id="age" name="age" readonly class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div>
+                <label for="admitted_medical_id" class="block text-gray-700">Admitted Medical ID</label>
+                <input type="text" id="admitted_medical_id" name="admitted_medical_id" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            
+            <div>
+                <label for="admitted_bed_no" class="block text-gray-700">Admitted Bed No</label>
+                <input type="text" id="admitted_bed_no" name="admitted_bed_no" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+
+            <!-- Admission Date, Type, Discharge Date -->
+            <div>
+                <label for="admission_date" class="block text-gray-700">Admission Date</label>
+                <input type="date" id="admission_date" name="admission_date" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div>
+                <label for="admission_type" class="block text-gray-700">Admission Type</label>
+                <select id="admission_type" name="admission_type" required class="mt-1 p-2 w-full border rounded-md">
+                    <option value="">Select Admission Type</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="scheduled">Scheduled</option>
+                </select>
+            </div>
+            <div>
+                <label for="discharge_date" class="block text-gray-700">Discharge Date</label>
+                <input type="date" id="discharge_date" name="discharge_date" class="mt-1 p-2 w-full border rounded-md">
+            </div>
+
+            <!-- Doctor Details -->
+            <div>
+                <label for="doctor_id" class="block text-gray-700">Doctor's ID</label>
+                <input type="text" id="doctor_id" name="doctor_id" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div>
+                <label for="doctor_name" class="block text-gray-700">Doctor's Name</label>
+                <input type="text" id="doctor_name" name="doctor_name" required class="mt-1 p-2 w-full border rounded-md" readonly>
+            </div>
+            <div>
+                <label for="doctor_signature" class="block text-gray-700">Digital Signature</label>
+                <input type="file" id="doctor_signature" name="doctor_signature" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div class="col-span-1">
+                <label for="disease_name" class="block text-gray-700">Disease Name</label>
+                <input type="text" id="disease_name" name="disease_name" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            <div class="col-span-1">
+                <label for="admitted_medical_name" class="block text-gray-700">Admitted Medical Name</label>
+                <input type="text" id="admitted_medical_name" name="admitted_medical_name" required class="mt-1 p-2 w-full border rounded-md">
+            </div>
+            
+
+            <div class="col-span-3">
+                <label for="symptoms" class="block text-gray-700">Symptoms</label>
+                <textarea id="symptoms" name="symptoms" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="diagnosis" class="block text-gray-700">Diagnosis Details</label>
+                <textarea id="diagnosis" name="diagnosis" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="treatment_summary" class="block text-gray-700">Treatment Summary</label>
+                <textarea id="treatment_summary" name="treatment_summary" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="prescriptions" class="block text-gray-700">Prescriptions</label>
+                <textarea id="prescriptions" name="prescriptions" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="tests_results" class="block text-gray-700">Tests & Results</label>
+                <textarea id="tests_results" name="tests_results" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="follow_up" class="block text-gray-700">Follow-Up Instructions</label>
+                <textarea id="follow_up" name="follow_up" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+            <div class="col-span-3">
+                <label for="comments" class="block text-gray-700">Additional Comments</label>
+                <textarea id="comments" name="comments" rows="3" class="mt-1 p-2 w-full border rounded-md"></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="col-span-3 flex items-center justify-between mt-6">
+                <button type="button" onclick="printReport()" class="px-4 py-2 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 transition duration-300">Print or Download</button>
+                <button type="button" onclick="storePatientData()" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition duration-300">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Health Record System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom background color for the entire page */
+        .main-bg-color {
+            background-color: #2563EB; /* Tailwind's blue-600 color */
+            .fixed-height-container {
+        height: 90vh; /* Adjusts to make everything fit within the screen */
+        overflow-y: auto;
+        padding: 1rem;
+    }
+
+    /* Reduce padding and font sizes */
+    input, select, button {
+        padding: 0.5rem;
+    }
+    label {
+        font-size: 0.875rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="main-bg-color text-white">
+    <nav class="bg-blue-600 text-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold">Health Record System</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Home</a>
+                    <a href="login.html" class="px-3 py-2 rounded-md hover:bg-blue-700">Login</a>
+                    <a href="admin.html" class="px-3 py-2 rounded-md hover:bg-blue-700" id="dataEntryLink" style="display: none;">Data Entry</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+<div class="min-h-screen flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 gap-8 max-w-7xl w-full">
+        <div class="flex flex-col items-center justify-start self-start mt-4">
+            <!-- Left section: Illustration and "Register Here" text -->
+            <img src="images/register.svg" alt="Register Page" class="w-full h-full object-cover">
+            <p class="text-3xl font-bold">Register Here</p>
+        </div>
+        
+        <div class="max-w-3xl w-full space-y-8 bg-white text-gray-900 p-10 rounded-lg shadow-lg">
+            <!-- Right section: Registration form -->
+            <div>
+                <h2 class="mt-6 text-center text-3xl font-extrabold">
+                    Create your account
+                </h2>
+            </div>
+            <form id="registrationForm" class="mt-8 space-y-6">
+                <!-- Name and Date of Birth -->
+                <div id="personalInfoFields">
+                    <div class="grid grid-cols-2 gap-6"> <!-- Adjusted gap for wider columns -->
+                        <div id="nameField">
+                            <label class="block text-sm font-medium">Full Name</label>
+                            <input type="text" name="fullname" required class="mt-1 p-2 w-full border rounded-md">
+                        </div>
+                        <div id="dobField">
+                            <label class="block text-sm font-medium">Date of Birth</label>
+                            <input type="date" name="dob" required class="mt-1 p-2 w-full border rounded-md">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Type -->
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">User Type</label>
+                    <select name="user_type" id="userType" required class="mt-1 p-2 w-full border rounded-md">
+                        <option value="patient">Patient</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="admin">Admin</option>
+                        <option value="medical">Medical</option>
+                    </select>
+                </div>
+
+                <!-- Medical-specific fields (Medical Name and License Type) -->
+                <div class="mt-4 hidden" id="medicalFields">
+                    <div>
+                        <label class="block text-sm font-medium">Medical Name</label>
+                        <input type="text" name="medical_name_medical" placeholder="Medical Name" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium">Medical License Number</label>
+                        <input type="text" name="license_type_medical" placeholder="License Number" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                   
+                </div>
+
+                <!-- Identification -->
+                <div class="mt-4" id="identificationFields">
+                    <label class="block text-sm font-medium">Identification</label>
+                    <div class="grid grid-cols-2 gap-6"> <!-- Adjusted gap for wider columns -->
+                        <div>
+                            <input type="text" name="nid" placeholder="NID Number" class="mt-1 p-2 w-full border rounded-md">
+                        </div>
+                        <div>
+                            <input type="text" name="birth_certificate" placeholder="Birth Certificate No" class="mt-1 p-2 w-full border rounded-md">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone Number and Email -->
+                <div class="mt-4 grid grid-cols-2 gap-6"> <!-- Adjusted gap for wider columns -->
+                    <div>
+                        <label class="block text-sm font-medium">Phone Number</label>
+                        <input type="tel" name="phone" required class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium">Email</label>
+                        <input type="email" name="email" required class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                </div>
+
+                <!-- Blood Group (hidden for medical user type) -->
+                <div class="mt-4" id="bloodGroupField">
+                    <label class="block text-sm font-medium">Blood Group</label>
+                    <select name="blood_group" required class="mt-1 p-2 w-full border rounded-md">
+                        <option value="" disabled selected>Select your blood group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+
+                <!-- Doctor-specific fields (Medical Name and License Number) -->
+                <div class="mt-4 hidden" id="doctorFields">
+                    <div>
+                        <label class="block text-sm font-medium">Medical Name</label>
+                        <input type="text" name="medical_name_doctor" placeholder="Medical Name" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium">Doctor License Number</label>
+                        <input type="text" name="license_number_doctor" placeholder="License Number" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium">Specialist In</label>
+                        <input type="text" name="specialist" placeholder="Specialist in" class="mt-1 p-2 w-full border rounded-md">
+                    </div>
+                </div>
+
+                <!-- Practice Location (for Medical users) -->
+                <div class="mt-4 hidden" id="practiceLocationField">
+                    <label class="block text-sm font-medium">Address</label>
+                    <input type="text" name="medical_address" placeholder="Address" class="mt-1 p-2 w-full border rounded-md">
+                </div>
+
+                <!-- District -->
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">District</label>
+                    <input type="text" name="district" required class="mt-1 p-2 w-full border rounded-md">
+                </div>
+
+                <!-- Password -->
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">Password</label>
+                    <input type="password" name="password" required class="mt-1 p-2 w-full border rounded-md">
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mt-4">
+                    <label class="block text-sm font-medium">Confirm Password</label>
+                    <input type="password" name="confirm_password" required class="mt-1 p-2 w-full border rounded-md">
+                </div>
+
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Register
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="login.html" class="font-medium text-blue-600 hover:text-blue-500">
+                        Log in
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       // Single event listener for user type change
+       document.getElementById('userType').addEventListener('change', function() {
+    const userType = this.value;
+    const nameField = document.getElementById('nameField');
+    const dobField = document.getElementById('dobField');
+    const medicalFields = document.getElementById('medicalFields');
+    const doctorFields = document.getElementById('doctorFields');
+    const practiceLocationField = document.getElementById('practiceLocationField');
+    const bloodGroupField = document.getElementById('bloodGroupField');
+    const identificationFields = document.getElementById('identificationFields');
+    
+    // Get form elements
+    const fullnameInput = document.querySelector('input[name="fullname"]');
+    const dobInput = document.querySelector('input[name="dob"]');
+    const bloodGroupSelect = document.querySelector('select[name="blood_group"]');
+    const nidInput = document.querySelector('input[name="nid"]');
+    const birthCertInput = document.querySelector('input[name="birth_certificate"]');
+    
+    if (userType === 'medical') {
+        // Hide and remove required attributes for non-medical fields
+        nameField.style.display = 'none';
+        dobField.style.display = 'none';
+        identificationFields.style.display = 'none';
+        medicalFields.style.display = 'block';
+        doctorFields.style.display = 'none';
+        practiceLocationField.style.display = 'block';
+        bloodGroupField.style.display = 'none';
+        
+        // Remove required attributes
+        fullnameInput.removeAttribute('required');
+        dobInput.removeAttribute('required');
+        bloodGroupSelect.removeAttribute('required');
+        
+        // Add required attributes for medical fields
+        document.querySelector('input[name="medical_name_medical"]').setAttribute('required', '');
+        document.querySelector('input[name="license_type_medical"]').setAttribute('required', '');
+        document.querySelector('input[name="medical_address"]').setAttribute('required', '');
+    } else {
+        // Show and add required attributes for non-medical fields
+        nameField.style.display = 'block';
+        dobField.style.display = 'block';
+        identificationFields.style.display = 'block';
+        medicalFields.style.display = 'none';
+        doctorFields.style.display = userType === 'doctor' ? 'block' : 'none';
+        practiceLocationField.style.display = 'none';
+        bloodGroupField.style.display = 'block';
+        
+        // Add required attributes back
+        fullnameInput.setAttribute('required', '');
+        dobInput.setAttribute('required', '');
+        bloodGroupSelect.setAttribute('required', '');
+        
+        // Remove required attributes from medical fields
+        const medicalInputs = document.querySelectorAll('#medicalFields input');
+        medicalInputs.forEach(input => input.removeAttribute('required'));
+
+        // Add required attributes for doctor fields if user type is doctor
+        if (userType === 'doctor') {
+            document.querySelector('input[name="medical_name_doctor"]').setAttribute('required', '');
+            document.querySelector('input[name="license_number_doctor"]').setAttribute('required', '');
+            document.querySelector('input[name="specialist"]').setAttribute('required', '');
+        }
+    }
+});
+
+/// Form submission handler
+document.getElementById("registrationForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    let data = Object.fromEntries(formData.entries());
+    const userType = data.user_type;
+    
+    // Validation helper
+    const validateRequired = (data, fields) => {
+        for (const field of fields) {
+            if (!data[field]) {
+                throw new Error(`${field.replace('_', ' ')} is required`);
+            }
+        }
+    };
+    
+    try {
+        if (userType === 'medical') {
+            // Required fields for medical
+            const requiredFields = ['phone', 'email', 'district', 'password', 'medical_name_medical', 'license_type_medical', 'medical_address'];
+            validateRequired(data, requiredFields);
+            
+            // Prepare medical data with correct field names
+            data = {
+                user_type: 'medical',
+                phone: data.phone,
+                email: data.email,
+                district: data.district,
+                password: data.password,
+                medical_name: data.medical_name_medical,
+                license_number: data.license_type_medical,
+                address: data.medical_address
+            };
+            
+        } else if (userType === 'doctor') {
+            // Required fields for doctor
+            const requiredFields = [
+                'fullname', 'dob', 'phone', 'email', 'district', 
+                'password', 'blood_group', 'medical_name_doctor', 
+                'license_number_doctor','specialist'
+            ];
+            validateRequired(data, requiredFields);
+            
+            // Validate date format
+            const dobDate = new Date(data.dob);
+            if (isNaN(dobDate.getTime())) {
+                throw new Error('Invalid date of birth');
+            }
+            
+            // Prepare doctor data with correct field names
+            data = {
+                user_type: 'doctor',
+                fullname: data.fullname,
+                dob: data.dob, // Keep the ISO date string format
+                phone: data.phone,
+                email: data.email,
+                district: data.district,
+                password: data.password,
+                blood_group: data.blood_group,
+                medical_name: data.medical_name_doctor,
+                license_number: data.license_number_doctor,
+                specialist: data.specialist,
+                nid: data.nid || null,
+                birth_certificate: data.birth_certificate || null
+            };
+        } else {
+            // Handle patient and admin
+            const requiredFields = [
+                'fullname', 'dob', 'phone', 'email', 'district', 
+                'password', 'blood_group'
+            ];
+            validateRequired(data, requiredFields);
+            
+            // Validate date format
+            const dobDate = new Date(data.dob);
+            if (isNaN(dobDate.getTime())) {
+                throw new Error('Invalid date of birth');
+            }
+            
+            // Prepare basic user data
+            data = {
+                user_type: userType,
+                fullname: data.fullname,
+                dob: data.dob, // Keep the ISO date string format
+                phone: data.phone,
+                email: data.email,
+                district: data.district,
+                password: data.password,
+                blood_group: data.blood_group,
+                nid: data.nid || null,
+                birth_certificate: data.birth_certificate || null
+            };
+        }
+        
+        // Log the final data being sent (for debugging)
+        console.log('Sending data:', data);
+        
+        const response = await fetch('http://localhost:3000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        
+        const result = await response.json();
+        if (response.ok) {
+            alert(`Registration successful! Your unique ID is ${result.unique_id}`);
+            window.location.href = 'login.html';
+        } else {
+            alert(result.error || "Registration failed. Please try again.");
+        }
+    } catch (error) {
+        alert(error.message || "Registration failed. Please try again.");
+        console.error('Error:', error);
+    }
+});
+</script>
+</body>
+</html>
